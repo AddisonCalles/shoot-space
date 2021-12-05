@@ -1,9 +1,9 @@
-import { CanvasObject } from "../core/canvasObject.class.js";
+import { Drawable } from "../core/drawable.class.js";
 import { EventListener } from "../core/eventListener.class.js";
 import { Sounds } from "../common/sounds.class.js";
 import { Health } from "../common/health.class.js";
 
-export class HealthBar extends CanvasObject {
+export class HealthBar extends Drawable {
     #health = new Health();
 
     constructor(canvas, x, y, width, height, health) {

@@ -1,41 +1,41 @@
 
-import { KinematicObject } from '../core/kinematicObject.class.js';
+import { Kinematic } from '../core/kinematic.class.js';
 import { HealthBar } from '../ui/healthBar.class.js';
 import { Sounds } from '../common/sounds.class.js';
-import { Shoot } from './shoot.class.js';
+import { Rocket } from './rocket.class.js';
 import { Ship } from './ship.class.js';
 
 
 export class Player extends Ship {
-    #shoots = [];
-    #maxShoots = 6;
+    #rockets = [];
+    #maxRockts = 6;
     #healthBar;
     constructor(_canvas, _color, _x, _y, _life) {
         super(_canvas, _color, _x, _y, _life);
         this.#healthBar = new HealthBar(_canvas, 10, 60, (this.canvas.width * 0.2), 8, this.health);
     }
     reset() {
-        this.#shoots = [];
+        this.#rockets = [];
         super.reset();
     }
     render() {
-        this.#shoots.forEach(shoot => {
-            shoot.move();
-            shoot.render();
+        this.#rockets.forEach(rockt => {
+            rockt.move();
+            rockt.render();
         });
         this.#healthBar.render();
-        this.#shoots = this.#shoots.filter(shoot => shoot.x < canvas.width && !shoot.isDestroy());
+        this.#rockets = this.#rockets.filter(rockt => rockt.x < canvas.width && !rockt.isDestroy());
         super.render();
     }
-    shoot() {
-        if (this.#shoots.length >= this.#maxShoots) return;
-        const shoot = new Shoot(canvas, 'orange', this.x + 5, this.y + 15);
-        shoot.vector.setVector(15, 0);
-        this.#shoots.push(shoot)
+    fire() {
+        if (this.#rockets.length >= this.#maxRockts) return;
+        const rockt = new Rocket(canvas, 'gray', this.x + 5, this.y + 15);
+        rockt.vector.setVector(1, 0);
+        this.#rockets.push(rockt)
     }
-    isShootEnemy(enemy) {
-        for (const shoot of this.#shoots) {
-            if (shoot.isShoot(enemy)) {
+    isShootedEnemy(enemy) {
+        for (const rockt of this.#rockets) {
+            if (rockt.isShooted(enemy)) {
                 enemy.reduceHealth(1);
                 if (enemy.health.current <= 0) {
                     enemy.destroy();
@@ -49,6 +49,6 @@ export class Player extends Ship {
         Sounds.shoot2();
         super.reduceHealth(value);
     }
-    get shoots() { return this.#shoots; }
+    get rockets() { return this.#rockets; }
 
 }

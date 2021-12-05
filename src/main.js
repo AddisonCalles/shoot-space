@@ -31,6 +31,14 @@ const mainRunner = () => {
       ctx.fillStyle = 'gray';
       ctx.fillText('Press Click to Start...', (canvas.width / 2) - 100, canvas.height / 2);
     }
+    
+
+
+
+   
+    
+
+
     const now = new Date().getTime();
     const milliSecondsDif = (now) - lastMark;
     const time = parseInt((now - initMark) / 1000);
@@ -44,7 +52,7 @@ const mainRunner = () => {
     ctx.font = "12px Arial";
     ctx.fillStyle = Colors.indicators;
     ctx.fillText(`Enemies: ${game.enemies.length} | Level: ${game.level} | points: ${game.points}`, 15, 45);
-    ctx.fillText(`Shoots: ${game.player.shoots.length} `, 15, 30);
+    ctx.fillText(`Shoots: ${game.player.rockets.length} `, 15, 30);
     ctx.fillText(`fps: ${fps} | time: ${game.gameOver || !game.isPlay? 0: time} seg`, 15, 15);
     fpsCounter++;
     //counterLoop++;

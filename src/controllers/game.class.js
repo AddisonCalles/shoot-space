@@ -15,7 +15,7 @@ export class Game {
     #enemies = [];
     #canvas;
     #levelText = "";
-    #gameofver = false;
+    #gameover = false;
     #playEvent = new EventListener();
     #gameOverEvent = new EventListener();
     #nextLevelEvent = new EventListener();
@@ -27,7 +27,7 @@ export class Game {
     }
 
     render() {
-        if (this.#gameofver) {
+        if (this.#gameover) {
             this.#gameOverScreen()
             return;
         }
@@ -37,7 +37,7 @@ export class Game {
         if (this.isPlay) {
             this.#player.render();
             this.renderEnemies();
-            if (!this.#gameofver && this.#player.health.current <= 0) {
+            if (!this.#gameover && this.#player.health.current <= 0) {
                 this.#gameOverExecute();
             }
             if (this.#levelText != '') {
@@ -57,7 +57,7 @@ export class Game {
             } else if (gameRef.gameOver) {
                 gameRef.reset();
             } else {
-                gameRef.player.shoot();
+                gameRef.player.fire();
             }
         });
         this.#canvas.addEventListener('mousemove', function (event) {
@@ -69,7 +69,7 @@ export class Game {
     }
 
     #gameOverExecute() {
-        this.#gameofver = true;
+        this.#gameover = true;
         this.gameOverEvent.emit(this.#level);
         Sounds.gameOver();
     }
@@ -79,7 +79,7 @@ export class Game {
             if (!enemy.dead) {
                 enemy.colisionDetect();
                 enemy.move();
-                if (this.#player.isShootEnemy(enemy)) {
+                if (this.#player.isShootedEnemy(enemy)) {
                     if (this.#enemies.length == 1) {
                         Sounds.explosionEnd();
                     }
@@ -103,7 +103,7 @@ export class Game {
             this.#points = 0;
             this.#level = 0;
             this.#player.reset();
-            this.#gameofver = false;
+            this.#gameover = false;
         },  3000);
     }
     nextLevel() {
@@ -141,7 +141,7 @@ export class Game {
     get gameOverEvent() { return this.#gameOverEvent; }
     get nextLevelEvent() { return this.#nextLevelEvent; }
     get playEvent() { return this.#playEvent; }
-    get gameOver() { return this.#gameofver; }
+    get gameOver() { return this.#gameover; }
     get points() { return this.#points; }
     get level() { return this.#level; }
     get enemies() { return this.#enemies; }

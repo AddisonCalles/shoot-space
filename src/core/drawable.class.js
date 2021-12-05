@@ -1,9 +1,9 @@
 import { Configs } from '../../config.js';
-export class CanvasObject {
+export class Drawable {
     #ctx;
     #offset = {x: 0, y: 0};
     #canvas;
-    #path = new Path2D();
+    #layers = [];
     #x;
     #y;
     #width;
@@ -18,11 +18,13 @@ export class CanvasObject {
 
 
     }
+    setLeyers(layers){
+        this.#layers = layers;
+    }
     move(_x, _y){
         this.#x += _x;
         this.#y += _y;
     }
-
     setPos(_x, _y) {
         this.#x = _x;
         this.#y = _y;
@@ -31,13 +33,10 @@ export class CanvasObject {
         this.#canvas = canvas;
         this.#ctx = this.#canvas.getContext('2d');
     }
-    render(_path, fillColor, direction) {
-        this.context.fillStyle = fillColor;
-        const rotatePath = new Path2D();
-        rotatePath.addPath(_path, DOMMatrix.fromMatrix().translate(this.width/2, this.height/2).rotate(direction).translate(this.width/2*-1, this.height/2*-1));
-        this.#path = new Path2D();
-        this.#path.addPath(rotatePath, DOMMatrix.fromMatrix().translate(this.x, this.y));
-        this.context.fill(this.#path);
+    render() {
+        this.#layers.forEach((layer)=>{
+                layer.render();
+        });
         if(Configs.debugMode) {
             this.context.strokeStyle = 'gray';
             this.context.strokeRect(this.x, this.y, this.width, this.height);

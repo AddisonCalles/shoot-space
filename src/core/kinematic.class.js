@@ -1,7 +1,7 @@
-import { CanvasObject } from './canvasObject.class.js';
+import { Drawable } from './drawable.class.js';
 import { Vector } from './vector.class.js';
 
-export class KinematicObject extends CanvasObject {
+export class Kinematic extends Drawable {
     #destroy = false;
     #path;    
     #vector = new Vector();
@@ -51,14 +51,8 @@ export class KinematicObject extends CanvasObject {
     move() {
         super.move(this.#vector.vel.x,this.#vector.vel.y);
     }    
-    setPath(_path) {
-        this.#path = _path;
-    }
     isDestroy() { return this.#destroy; }
     destroy() { this.#destroy = true; }
-    render(_path, fillColor) {
-        super.render(_path, fillColor, this.#vector.dir);
-    }
     get vector() {
         return this.#vector;
     }
