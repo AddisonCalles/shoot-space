@@ -30,7 +30,7 @@ export class Player extends Ship {
     fire() {
         if (this.#rockets.length >= this.#maxRockts) return;
         const rockt = new Rocket(canvas, 'gray', this.x + 5, this.y + 15);
-        rockt.vector.setVector(1, 0);
+        rockt.vector.setVector(15, 0);
         this.#rockets.push(rockt)
     }
     isShootedEnemy(enemy) {
