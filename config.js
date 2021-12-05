@@ -1,5 +1,5 @@
 export const Configs = {
-    debugMode: true,
+    debugMode: false,
     gameSpeed: 60,
     canvasWidth: 800,
     canvasHeight: 400,
