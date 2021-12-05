@@ -5,7 +5,7 @@ export class Ball extends KinematicObject {
     #color;
     #path = new Path2D();
     constructor(canvas, color, x, y) {
-        super(canvas, 30, x, y);
+        super(canvas, x, y, 30, 30);
         this.#color = color;
         this.initPath();
     }
