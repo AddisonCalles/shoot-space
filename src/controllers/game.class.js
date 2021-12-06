@@ -67,14 +67,12 @@ export class Game {
     play() {
         this.#play = true;
     }
-
     #gameOverExecute() {
         this.#gameover = true;
         this.gameOverEvent.emit(this.#level);
         Sounds.gameOver();
     }
     renderEnemies() {
-
         this.#enemies.forEach(enemy => {
             if (!enemy.dead) {
                 enemy.colisionDetect();
@@ -115,7 +113,6 @@ export class Game {
             this.#addEnemies(this.#level);
         }, 3000);
     }
-
     #gameOverScreen() {
         this.#context.font = "40px Arial";
         this.#context.fillStyle = 'gray';
@@ -137,7 +134,6 @@ export class Game {
             this.#enemies.push(enemy)
         }
     }
-
     get gameOverEvent() { return this.#gameOverEvent; }
     get nextLevelEvent() { return this.#nextLevelEvent; }
     get playEvent() { return this.#playEvent; }
@@ -146,8 +142,5 @@ export class Game {
     get level() { return this.#level; }
     get enemies() { return this.#enemies; }
     get player() { return this.#player; }
-    get isPlay() {
-        return this.#play;
-    }
-
+    get isPlay() { return this.#play; }
 }

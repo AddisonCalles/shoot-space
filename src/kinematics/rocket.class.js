@@ -20,6 +20,7 @@ export class Rocket extends Kinematic {
         shoot.lineTo(0, center+2);
         shoot.lineTo(0, center-2);
         shoot.closePath();
+        
             /*
         shoot.rect(0, center-2, 20, 4); // Gun
         shoot.rect(5, center-7.5, 2, 15);// Fly
