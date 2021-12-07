@@ -1,3 +1,5 @@
+import { angleBetweenPoints, vectorByXY, vectorComponents } from './helpers/math.js';
+
 export class Vector {
     #vel =0;
     #dir = 0;
@@ -20,23 +22,25 @@ export class Vector {
         this.setVector(this.#vel, this.#dir);
     }
     
-    rotateTo(element1){
-        this.setDir(-180);
+    rotateTo(element){
+        const angleBetweenElements = angleBetweenPoints(this.#element, element);
+        this.setDir(angleBetweenElements);
     }
 
     setVector(_vel, _dir) {
         this.#vel = Math.abs(_vel);
         this.#dir = _dir;
-        const radians = _dir * Math.PI / 180;
-        this.#velX = (this.#vel * Math.cos(radians));
-        this.#velY = (this.#vel * Math.sin(radians));
+        const components = vectorComponents(this.#dir, this.#vel);
+        this.#velX = components.x;
+        this.#velY = components.y;
     }
 
     setVelXY(velx, vely) {
         this.#velX = velx;
         this.#velY = vely;
-        this.#vel = Math.abs(((this.#velX ** 2) + (this.#velY ** 2)) ** 1 / 2);
-        this.#dir = Math.atan(this.#velY / this.#velX);
+        const vector = vectorByXY(velx, vely);
+        this.#vel = vector.vel;
+        this.#dir = vector.dir;
     }
 
     get vel() { return { vel: this.#vel, x: this.#velX, y: this.#velY }; }

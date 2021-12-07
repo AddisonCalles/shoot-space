@@ -1,9 +1,10 @@
-import { Enemy, EnemyLevels } from "../kinematics/enemy.class.js";
-import { random } from "../common/helpers.js";
-import { Sounds } from "../common/sounds.class.js";
+import { SmallShip, EnemyLevels } from "../kinematics/enemies/smallShip.class.js";
+import { random } from "../common/helpers/math.js";
+import { Sounds } from "../resources/sounds.class.js";
 import { Player } from "../kinematics/player.class.js";
 import { Colors } from "../ui/colors.js";
-import { EventListener } from "../core/eventListener.class.js";
+import { EventListener } from "../common/eventListener.class.js";
+import { QueenShipV1 } from "../kinematics/enemies/queenshipv1.class.js";
 
 
 export class Game {
@@ -19,25 +20,34 @@ export class Game {
     #playEvent = new EventListener();
     #gameOverEvent = new EventListener();
     #nextLevelEvent = new EventListener();
+    #queen;
+    #queenLevel = 2;
+    #resetText = `Press click to reset...`;
+    #secondsToReset = 3;
     constructor(canvas) {
         this.#canvas = canvas;
         this.#context = canvas.getContext('2d');
-        this.#player = new Player(canvas, '#4f83cc', 20, 50, 100);
+        this.#player = new Player(canvas, '#4f83cc', 20, 50, 15);    
+        this.#player.health.deadEvent.subscribe(()=>{
+            this.#gameover = true;
+        })    
         this.#initMouseEvents();
     }
 
     render() {
+
         if (this.#gameover) {
             this.#gameOverScreen()
             return;
         }
         this.#context.fillStyle = Colors.background;
         this.#context.fillRect(0, 0, this.#canvas.width, this.#canvas.height);
-
+        
         if (this.isPlay) {
+            if(this.#queen) this.renderQueen();
             this.#player.render();
             this.renderEnemies();
-            if (!this.#gameover && this.#player.health.current <= 0) {
+            if (this.#gameover ) {
                 this.#gameOverExecute();
             }
             if (this.#levelText != '') {
@@ -68,48 +78,51 @@ export class Game {
         this.#play = true;
     }
     #gameOverExecute() {
-        this.#gameover = true;
         this.gameOverEvent.emit(this.#level);
         Sounds.gameOver();
     }
     renderEnemies() {
         this.#enemies.forEach(enemy => {
-            if (!enemy.dead) {
-                enemy.colisionDetect();
+            if (!enemy.health.isDead) {
                 enemy.move();
                 if (this.#player.isShootedEnemy(enemy)) {
-                    if (this.#enemies.length == 1) {
-                        Sounds.explosionEnd();
-                    }
                     this.#points++;
                 } else if (this.#player.hasColision(enemy)) {
                     enemy.destroy();
-                    this.#player.reduceHealth(20);
+                    this.#player.health.reduce(1);
                 } else {
                     enemy.render();
                 }
             }
         });
         this.#enemies = this.#enemies.filter(enemy => !enemy.isDestroy());
-        if (this.#enemies.length == 0 && this.#levelText == '') {
+        if(this.#level % this.#queenLevel == 0 && this.#queen){
+            //Is Queen level
+        }
+        else if (this.#enemies.length == 0 && this.#levelText == '') {
+            Sounds.explosionEnd();
             this.nextLevel();
         }
     }
     reset() {
-        setTimeout(() => {
-            this.#enemies = [];
-            this.#points = 0;
-            this.#level = 0;
-            this.#player.reset();
-            this.#gameover = false;
-        },  3000);
+        setInterval(() => {
+            if(this.#secondsToReset == 0){
+                document.location.reload();
+            }
+            this.#resetText = `Reset in ${this.#secondsToReset} seconds...`;
+            this.#secondsToReset--;
+        },  1000);
     }
     nextLevel() {
         this.#level++;
+       
         this.#levelText = `Level ${this.#level}`;
 
         setTimeout(() => {
             this.#levelText = ``;
+            if(this.#level % this.#queenLevel==0){
+                this.#enemies.push(new QueenShipV1(canvas, this.#player));
+            }
             this.#addEnemies(this.#level);
         }, 3000);
     }
@@ -118,7 +131,7 @@ export class Game {
         this.#context.fillStyle = 'gray';
         this.#context.fillText(`Game Over`, (this.#canvas.width / 2) - 100, this.#canvas.height / 2);
         this.#context.font = "18px Arial";
-        this.#context.fillText(`Press click to reset...`, (this.#canvas.width / 2) - 100, (this.#canvas.height / 2) + 35);
+        this.#context.fillText(this.#resetText, (this.#canvas.width / 2) - 100, (this.#canvas.height / 2) + 35);
     }
     #addEnemies(count) {
         for (let index = 0; index < count; index++) {
@@ -129,7 +142,7 @@ export class Game {
             } else if (index % 6 == 0) {
                 levelEnemy = EnemyLevels.level3;
             }
-            const enemy = new Enemy(this.#canvas, levelEnemy, (this.#canvas.width - 100), random(this.#canvas.height, 5));
+            const enemy = new SmallShip(this.#canvas, levelEnemy, (this.#canvas.width - 100), random(this.#canvas.height, 5), this.#player);
             enemy.vector.setVector(1.5 + (this.#level / 5), random(270, 90));
             this.#enemies.push(enemy)
         }

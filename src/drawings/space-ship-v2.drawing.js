@@ -1,4 +1,4 @@
-import { LayerPath } from "../core/layerPath.class.js";
+import { LayerPath } from "../common/layerPath.class.js";
 
 const wingBack = new Path2D();
 wingBack.moveTo(3, 4);
@@ -62,7 +62,7 @@ thrusters.rect(10, 15, 13, 4);
 thrusters.rect(10, 23, 13, 4);
 
 
-export const SpaceShipV2 = (color, element)=>([
+export const SpaceShipV2Drawing = (color, element)=>([
     new LayerPath(wingBack, color, element),
     new LayerPath(wingFront,'#bdbdbd', element),
     new LayerPath(fuellTancks, '#707070', element),

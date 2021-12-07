@@ -1,6 +1,6 @@
-import { Drawable } from "../core/drawable.class.js";
-import { EventListener } from "../core/eventListener.class.js";
-import { Sounds } from "../common/sounds.class.js";
+import { Drawable } from "../common/drawable.class.js";
+import { EventListener } from "../common/eventListener.class.js";
+import { Sounds } from "../resources/sounds.class.js";
 import { Health } from "../common/health.class.js";
 
 export class HealthBar extends Drawable {
@@ -14,10 +14,17 @@ export class HealthBar extends Drawable {
         const unitWidth = this.width / this.#health.total;
         const widthLife = this.#health.current * unitWidth;
         const border = parseInt(0.2 * this.height);
+        const font = this.height < 8? 8 : this.height
         this.context.strokeStyle = background;
         this.context.fillStyle = color;
-        this.context.strokeRect(this.x, this.y, this.width + (border * 2), this.height + (border * 2));
+
+        const height = this.height + (border * 2);
+        const width =this.width + (border * 2);
+        this.context.strokeRect(this.x, this.y,width, height );
         this.context.fillRect(this.x + border, this.y + border, widthLife, this.height);
+        this.context.fillStyle = 'orange';
+        this.context.font = `${font}px Arial`;
+        this.context.fillText(`${parseInt((this.health.current/this.health.total) *100)}%`, this.x, this.y + height+10);
     }
     get health() { return this.#health; }
 }

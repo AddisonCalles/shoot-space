@@ -1,43 +1,49 @@
 
-import { Kinematic } from '../core/kinematic.class.js';
+import { Kinematic } from '../common/kinematic.class.js';
 import { HealthBar } from '../ui/healthBar.class.js';
-import { Sounds } from '../common/sounds.class.js';
+import { Sounds } from '../resources/sounds.class.js';
 import { Rocket } from './rocket.class.js';
-import { Ship } from './ship.class.js';
+import { Health } from '../common/health.class.js';
+import { SpaceShipV2Drawing } from '../drawings/space-ship-v2.drawing.js';
+import { EnergyBall } from './energyball.class.js';
 
 
-export class Player extends Ship {
+export class Player extends Kinematic {
     #rockets = [];
     #maxRockts = 6;
     #healthBar;
-    constructor(_canvas, _color, _x, _y, _life) {
-        super(_canvas, _color, _x, _y, _life);
+    #health;
+    constructor(_canvas, _color, _x, _y, _health) {
+        super(_canvas, _x, _y, 30, 40);
+        super.centerOffset();
+        this.#health = new Health(_health);
+        this.#health.reduceEvent.subscribe(()=>Sounds.shoot2());
         this.#healthBar = new HealthBar(_canvas, 10, 60, (this.canvas.width * 0.2), 8, this.health);
+        super.setLeyers(SpaceShipV2Drawing(_color, this));
     }
     reset() {
         this.#rockets = [];
-        super.reset();
     }
     render() {
-        this.#rockets.forEach(rockt => {
-            rockt.move();
-            rockt.render();
+        this.#rockets.forEach(rocket => {
+            rocket.move();
+            rocket.render();
         });
         this.#healthBar.render();
-        this.#rockets = this.#rockets.filter(rockt => rockt.x < canvas.width && !rockt.isDestroy());
+        this.#rockets = this.#rockets.filter(rocket => rocket.x < canvas.width && !rocket.isDestroy());
         super.render();
     }
     fire() {
         if (this.#rockets.length >= this.#maxRockts) return;
-        const rockt = new Rocket(canvas, 'gray', this.x + 5, this.y + 15);
-        rockt.vector.setVector(15, 0);
-        this.#rockets.push(rockt)
+        const rocket = new Rocket(canvas, 'gray', this.x + 5, this.y + 15);
+        rocket.vector.setVector(15, 0);
+        this.#rockets.push(rocket)
     }
     isShootedEnemy(enemy) {
-        for (const rockt of this.#rockets) {
-            if (rockt.isShooted(enemy)) {
-                enemy.reduceHealth(1);
-                if (enemy.health.current <= 0) {
+        for (const rocket of this.#rockets) {
+            if (rocket.hasColision(enemy)) {
+                enemy.health.reduce(1);
+                if (enemy.health.isDead) {
                     enemy.destroy();
                 }
                 return true;
@@ -45,10 +51,8 @@ export class Player extends Ship {
         }
         return false;
     }
-    reduceHealth(value){
-        Sounds.shoot2();
-        super.reduceHealth(value);
-    }
+
+    get health() { return this.#health;}
     get rockets() { return this.#rockets; }
 
 }

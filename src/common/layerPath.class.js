@@ -3,6 +3,7 @@ export class LayerPath {
     #path;
     #element;
     #originalPath;
+    #rotation = 0;
 
     constructor(path_, color_, element) {
         this.#color = color_;
@@ -19,12 +20,15 @@ export class LayerPath {
     }
 
     render() {
-        this.rotate(this.#element.vector.dir)
+        const rotation = this.#rotation+this.#element.rotation + (this.#element.enabledVectorRotation? this.#element.vector.dir:0);
+        this.rotate(rotation);
         this.#element.context.fillStyle = this.#color;
         this.#element.context.fill(this.#path);
 
     }
 
+    get rotation(){ this.#rotation; }
+    set rotation(value){this.#rotation = value};
     get color() { return this.#color; }
     get path() { return this.#path; }
 

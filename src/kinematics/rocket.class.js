@@ -1,6 +1,6 @@
-import { Kinematic } from '../core/kinematic.class.js';
-import { Sounds } from '../common/sounds.class.js';
-import { LayerPath } from '../core/layerPath.class.js';
+import { Kinematic } from '../common/kinematic.class.js';
+import { Sounds } from '../resources/sounds.class.js';
+import { LayerPath } from '../common/layerPath.class.js';
 
 export class Rocket extends Kinematic {
     #primaryColor;
@@ -35,10 +35,10 @@ export class Rocket extends Kinematic {
         super.setLeyers([ new LayerPath(shoot, this.#primaryColor, this), new LayerPath(flame, 'red', this), new LayerPath(flame2, 'yellow', this)]);
     }
 
-    isShooted(element){
-        if(this.hasColision(element)){
+    hasColision(element){
+        if(super.hasColision(element)){
             Sounds.explosion();
-            this.destroy();
+            super.destroy();
             return true;
         }
         return false;

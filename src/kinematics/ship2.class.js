@@ -1,6 +1,6 @@
-import { Kinematic } from '../core/kinematic.class.js';
+import { Kinematic } from '../common/kinematic.class.js';
 import { Health } from '../common/health.class.js';
-import { LayerPath } from '../core/layerPath.class.js';
+import { LayerPath } from '../common/layerPath.class.js';
 export class Ship2 extends Kinematic {
     #color;
     #health;
@@ -28,8 +28,5 @@ export class Ship2 extends Kinematic {
         super.setLeyers([layer1]);
     }
 
-    reduceHealth(cant) {
-        this.#health.reduce(cant);
-    }
     get health() { return this.#health; }
 }
