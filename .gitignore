@@ -3,4 +3,4 @@
 .DS_Store
 *.map
 *.d.ts
-node_modules/streetzero/src
+node_modules/streetzero/src/*
