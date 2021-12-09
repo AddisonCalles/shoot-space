@@ -3,7 +3,7 @@ import { Sounds } from "../resources/sounds.class.js";
 import { Player } from "../kinematics/player.class.js";
 import { Colors } from "../ui/colors.js";
 import { QueenShipV1 } from "../kinematics/enemies/queenshipv1.class.js";
-import { math, EventListener } from '../../../node_modules/streetzero/dist/streetzero.esm.js';
+import { math, EventListener } from '../../node_modules/streetzero/dist/streetzero.esm.js';
 
 export class Game {
     #play = false;
