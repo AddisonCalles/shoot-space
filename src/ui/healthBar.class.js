@@ -1,7 +1,5 @@
-import { Drawable } from "../common/drawable.class.js";
-import { EventListener } from "../common/eventListener.class.js";
-import { Sounds } from "../resources/sounds.class.js";
-import { Health } from "../common/health.class.js";
+import { Drawable } from "../../node_modules/streetzero/dist/streetzero.esm.js";
+import { Health } from "../../node_modules/streetzero/dist/streetzero.esm.js";
 
 export class HealthBar extends Drawable {
     #health = new Health();

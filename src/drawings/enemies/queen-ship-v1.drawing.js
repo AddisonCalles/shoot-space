@@ -1,4 +1,4 @@
-import { LayerPath } from "../../common/layerPath.class.js";
+import { LayerPath } from "../../../node_modules/streetzero/dist/streetzero.esm.js";
 
 
 function body(xoff, yoff, xmul, ymul) {

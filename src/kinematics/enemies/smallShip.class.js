@@ -1,4 +1,4 @@
-import { random } from '../../common/helpers/math.js';
+import { math } from '../../../node_modules/streetzero/dist/streetzero.esm.js';
 import { Sounds } from '../../resources/sounds.class.js';
 import { SpaceShipV2Drawing } from '../../drawings/space-ship-v2.drawing.js';
 import { Enemy } from './enemy.class.js';
@@ -34,7 +34,7 @@ export class SmallShip extends Enemy {
     }
 
     #initEvilMode(){
-        this.#evilModeTimer = parseInt(random(25000, 5000));
+        this.#evilModeTimer = parseInt(math.random(25000, 5000));
         this.#evilMode = setTimeout(()=>{
                 this.vector.rotateTo(this.player);
                 this.#initEvilMode();

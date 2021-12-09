@@ -1,0 +1,22 @@
+{
+    "name": "juego-canvas",
+    "version": "1.0.0",
+    "description": "",
+    "main": "config.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AddisonCalles/shoot-space.git"
+    },
+    "author": "Addison Calles",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/AddisonCalles/shoot-space/issues"
+    },
+    "homepage": "https://github.com/AddisonCalles/shoot-space#readme",
+    "dependencies": {
+        "streetzero": "^0.3.0"
+    }
+}

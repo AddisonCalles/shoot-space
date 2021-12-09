@@ -1,8 +1,5 @@
-import { Kinematic } from '../common/kinematic.class.js';
+import  { Kinematic, LayerPath, math, color } from '../../node_modules/streetzero/dist/streetzero.esm.js';
 import { Sounds } from '../resources/sounds.class.js';
-import { LayerPath } from '../common/layerPath.class.js';
-import { rgba } from '../common/helpers/color.js';
-import { random } from '../common/helpers/math.js';
 
 export class EnergyBall extends Kinematic {
     #color = [
@@ -11,7 +8,7 @@ export class EnergyBall extends Kinematic {
     ];
     constructor(canvas,color, x, y) {
         super(canvas, x , y, 30, 30);
-        this.rotation = parseInt(random(45, 0))
+        this.rotation = parseInt(math.random(45, 0))
         //Sounds.shoot()
         this.initLayer();
     }
@@ -21,7 +18,7 @@ export class EnergyBall extends Kinematic {
     }
     initLayer() {
         const ball = new Path2D();
-        ball.ellipse(15,15,10,10,0,0,Math.PI*2)
+        ball.ellipse(15,15,10,10,0,0,Math.PI*2);
         super.setLeyers([
             new LayerPath(ball, this.#color[0], this),
             ...this.#makeFlame(0, 7), 
@@ -39,9 +36,9 @@ export class EnergyBall extends Kinematic {
         flame.ellipse(0, center, 6,  4, 0, 0,Math.PI*2); // llama
         const flame2 = new Path2D();
         flame2.ellipse(2, center, 4,  2, 0, 0,Math.PI*2); // llama
-        const flameLayer = new LayerPath(flame, rgba(this.#color[0],0.9), this)
+        const flameLayer = new LayerPath(flame, color.rgba(this.#color[0],0.9), this)
         flameLayer.rotation = rotation;
-        const flame2Layer = new LayerPath(flame2, rgba(this.#color[1],0.9), this);
+        const flame2Layer = new LayerPath(flame2, color.rgba(this.#color[1],0.9), this);
         flame2Layer.rotation = rotation;
         return [flameLayer, flame2Layer];
     }

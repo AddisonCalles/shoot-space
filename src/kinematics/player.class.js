@@ -1,11 +1,8 @@
-
-import { Kinematic } from '../common/kinematic.class.js';
+import { Kinematic, LayerPath, Health } from '../../node_modules/streetzero/dist/streetzero.esm.js';
 import { HealthBar } from '../ui/healthBar.class.js';
 import { Sounds } from '../resources/sounds.class.js';
 import { Rocket } from './rocket.class.js';
-import { Health } from '../common/health.class.js';
 import { SpaceShipV2Drawing } from '../drawings/space-ship-v2.drawing.js';
-import { EnergyBall } from './energyball.class.js';
 
 
 export class Player extends Kinematic {

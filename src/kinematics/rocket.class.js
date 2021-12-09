@@ -1,6 +1,5 @@
-import { Kinematic } from '../common/kinematic.class.js';
+import { Kinematic, LayerPath } from '../../node_modules/streetzero/dist/streetzero.esm.js';
 import { Sounds } from '../resources/sounds.class.js';
-import { LayerPath } from '../common/layerPath.class.js';
 
 export class Rocket extends Kinematic {
     #primaryColor;

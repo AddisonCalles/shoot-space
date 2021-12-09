@@ -1,5 +1,4 @@
-import { Health } from '../../common/health.class.js';
-import { Kinematic } from '../../common/kinematic.class.js';
+import { Health, Kinematic } from '../../../node_modules/streetzero/dist/streetzero.esm.js';
 import { Colors } from '../../ui/colors.js';
 import { HealthBar } from '../../ui/healthBar.class.js';
 

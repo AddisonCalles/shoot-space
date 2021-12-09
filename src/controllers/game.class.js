@@ -1,18 +1,16 @@
 import { SmallShip, EnemyLevels } from "../kinematics/enemies/smallShip.class.js";
-import { random } from "../common/helpers/math.js";
 import { Sounds } from "../resources/sounds.class.js";
 import { Player } from "../kinematics/player.class.js";
 import { Colors } from "../ui/colors.js";
-import { EventListener } from "../common/eventListener.class.js";
 import { QueenShipV1 } from "../kinematics/enemies/queenshipv1.class.js";
-
+import { math, EventListener } from '../../../node_modules/streetzero/dist/streetzero.esm.js';
 
 export class Game {
     #play = false;
-    #level = 0;
+    #level = 23;
     #player;
     #context;
-    #points = 0;
+    #points = 856;
     #enemies = [];
     #canvas;
     #levelText = "";
@@ -21,7 +19,7 @@ export class Game {
     #gameOverEvent = new EventListener();
     #nextLevelEvent = new EventListener();
     #queen;
-    #queenLevel = 2;
+    #queenLevel = 25;
     #resetText = `Press click to reset...`;
     #secondsToReset = 3;
     constructor(canvas) {
@@ -142,8 +140,8 @@ export class Game {
             } else if (index % 6 == 0) {
                 levelEnemy = EnemyLevels.level3;
             }
-            const enemy = new SmallShip(this.#canvas, levelEnemy, (this.#canvas.width - 100), random(this.#canvas.height, 5), this.#player);
-            enemy.vector.setVector(1.5 + (this.#level / 5), random(270, 90));
+            const enemy = new SmallShip(this.#canvas, levelEnemy, (this.#canvas.width - 100), math.random(this.#canvas.height, 5), this.#player);
+            enemy.vector.setVector(1.5 + (this.#level / 5), math.random(270, 90));
             this.#enemies.push(enemy)
         }
     }

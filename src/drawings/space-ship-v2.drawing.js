@@ -1,4 +1,4 @@
-import { LayerPath } from "../common/layerPath.class.js";
+import { LayerPath } from "../../node_modules/streetzero/dist/streetzero.esm.js";
 
 const wingBack = new Path2D();
 wingBack.moveTo(3, 4);

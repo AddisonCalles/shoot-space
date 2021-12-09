@@ -1,6 +1,4 @@
-import { Kinematic } from '../common/kinematic.class.js';
-import { Health } from '../common/health.class.js';
-import { LayerPath } from '../common/layerPath.class.js';
+import {Kinematic}  from '../../node_modules/streetzero/dist/streetzero.esm.js';
 export class Ship2 extends Kinematic {
     #color;
     #health;

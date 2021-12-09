@@ -1,4 +1,4 @@
-import { random } from '../../common/helpers/math.js';
+import { math } from '../../../node_modules/streetzero/dist/streetzero.esm.js';
 import { queenShipV1Drawing } from '../../drawings/enemies/queen-ship-v1.drawing.js';
 import { EnergyBall } from '../energyball.class.js';
 import { Enemy } from './enemy.class.js';
@@ -53,7 +53,7 @@ export class QueenShipV1 extends Enemy {
         }
 
         if (this.vector.vel.x == 0 && this.x2 > (this.canvas.width - (this.canvas.width * 0.1))) {
-            super.vector.setVector(this.#velocity, random(230, 150));
+            super.vector.setVector(this.#velocity, math.random(230, 150));
         }
         if (this.vector.vel.x != 0 && this.x2 < (this.canvas.width - (this.canvas.width * 0.1))) {
             super.vector.setVelXY(0, this.#velocity);
