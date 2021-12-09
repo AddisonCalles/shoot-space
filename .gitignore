@@ -1,4 +1,6 @@
 .vscode
 *.log
 .DS_Store
-dist
+*.map
+*.d.ts
+node_modules/streetzero/src
