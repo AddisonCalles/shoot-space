@@ -7,10 +7,10 @@ import { math, EventListener } from '../../node_modules/streetzero/dist/streetze
 
 export class Game {
     #play = false;
-    #level = 23;
+    #level = 0;
     #player;
     #context;
-    #points = 856;
+    #points = 0;
     #enemies = [];
     #canvas;
     #levelText = "";
